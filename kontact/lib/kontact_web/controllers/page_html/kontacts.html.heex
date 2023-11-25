@@ -1,0 +1,16 @@
+<h1 class={"text-3xl"}>Kontacts</h1>
+
+<div class={"my-5"}>
+  <ul :for={c <- @contacts}>
+    <div class={"bg-gray-100 p-4 my-2"}>
+      <li>Name: <%= c.name %></li>
+      <li>Email: <%= c.email %></li>
+      <li>Phone: <%= c.phone %></li>
+      <li>
+        <a class={"text-blue-500"} href={~p"/edit/#{c.id}"}>Edit</a>
+        <a class={"mx-2 text-red-500"} href={~p"/delete/#{c.id}"}>Delete</a>
+      </li>
+    </div>
+  </ul>
+</div>
+
