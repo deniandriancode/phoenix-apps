@@ -1,0 +1,16 @@
+<.header>
+  Memo <%= @memo.id %>
+  <:subtitle>This is a memo record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/memos/#{@memo}/edit"}>
+      <.button>Edit memo</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Title"><%= @memo.title %></:item>
+  <:item title="Content"><%= @memo.content %></:item>
+</.list>
+
+<.back navigate={~p"/memos"}>Back to memos</.back>
