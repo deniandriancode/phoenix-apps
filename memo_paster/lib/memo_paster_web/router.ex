@@ -19,17 +19,19 @@ defmodule MemoPasterWeb.Router do
 
     get "/", PageController, :home
 
-    get "/memos/user/new", MemoController, :user_new
-    get "/memos/user/:id/author", MemoController, :user_author_assoc
+    get "/memos/:id/author", MemoController, :user_author_assoc
     post "/user/memos", MemoController, :user_post
 
     resources "/memos", MemoController
-    resources "/authors", AuthorController
   end
 
   # Other scopes may use custom stacks.
   scope "/api", MemoPasterWeb do
     pipe_through :api
+
+    get "/memos/:id/author", MemoController, :user_author_assoc_api
+    post "/user/memos", MemoController, :user_post_api
+    
     resources "/memos", MemoController, except: [:new, :edit]
     resources "/authors", AuthorController, except: [:new, :edit]
   end

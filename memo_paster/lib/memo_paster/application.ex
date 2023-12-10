@@ -14,6 +14,8 @@ defmodule MemoPaster.Application do
       {Phoenix.PubSub, name: MemoPaster.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: MemoPaster.Finch},
+      # New worker
+      MemoPaster.AuthorInit,
       # Start a worker by calling: MemoPaster.Worker.start_link(arg)
       # {MemoPaster.Worker, arg},
       # Start to serve requests, typically the last entry

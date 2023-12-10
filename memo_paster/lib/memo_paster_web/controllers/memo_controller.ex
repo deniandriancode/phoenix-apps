@@ -14,15 +14,33 @@ defmodule MemoPasterWeb.MemoController do
     render(conn, :new, changeset: changeset)
   end
 
-  def create(conn, %{"memo" => memo_params}) do
-    case Memos.create_memo(memo_params) do
-      {:ok, memo} ->
+  def create(conn, %{"memo" => memo}) do
+    case [memo["username"], memo["password"]] do
+      ["deni", "wawaw_hunter"] ->
+        author = Memos.get_author_by_name("deniAndrian")
+        memo_atom = for {key, val} <- memo, into: %{}, do: {String.to_atom(key), val}
+        memo_rec = Memos.create_memo_author(memo_atom, author)
         conn
         |> put_flash(:info, "Memo created successfully.")
-        |> redirect(to: ~p"/memos/#{memo}")
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :new, changeset: changeset)
+        |> redirect(to: ~p[/memos/#{memo_rec.id}])
+      ["marcsha", "wawaw_hunter"] ->
+        author = Memos.get_author_by_name("MarkSjaer")
+        memo_atom = for {key, val} <- memo, into: %{}, do: {String.to_atom(key), val}
+        memo_rec = Memos.create_memo_author(memo_atom, author)
+        conn
+        |> put_flash(:info, "Memo created successfully.")
+        |> redirect(to: ~p[/memos/#{memo_rec.id}])
+      ["wildan", "wawaw_hunter"] ->
+        author = Memos.get_author_by_name("Aeshma")
+        memo_atom = for {key, val} <- memo, into: %{}, do: {String.to_atom(key), val}
+        memo_rec = Memos.create_memo_author(memo_atom, author)
+        conn
+        |> put_flash(:info, "Memo created successfully.")
+        |> redirect(to: ~p[/memos/#{memo_rec.id}])
+      _ ->
+        conn
+        |> put_flash(:error, "Username or password is incorrect.")
+        |> redirect(to: ~p[/memos/new])
     end
   end
 
@@ -60,39 +78,43 @@ defmodule MemoPasterWeb.MemoController do
     |> redirect(to: ~p"/memos")
   end
 
-  def user_new(conn, _params) do
-    changeset = Memos.change_memo(%Memo{})
-    render(conn, :user_new, changeset: changeset)
-  end
-
-  def user_post(conn, %{"memo" => memo}) do
-    if memo["username"] == "admin" and memo["password"] == "admin" do
-      author = Memos.get_author!(3)
-      memo_atom = for {key, val} <- memo, into: %{}, do: {String.to_atom(key), val}
-      memo_struct = struct(Memo, memo_atom)
-      Memos.create_memo_author(memo_atom, author)
-      # |> put_flash(:info, "Memo created successfully.")
-      redirect(conn, to: ~p(/memos))
-      # case Memos.create_memo(memo) do
-      #   {:ok, m} ->
-      #     conn
-      #     |> put_flash(:info, "Memo created successfully.")
-      #     |> redirect(to: ~p"/memos/#{m}")
-      #
-      #   {:error, %Ecto.Changeset{} = changeset} ->
-      #     put_flash(conn, :error, "Memo cannot be created.")
-      #     render(conn, :new, changeset: changeset)
-      # end
-    end
-    # put_flash(conn, :error, "You are not an authorized user.")
-    redirect(conn, to: ~p"/memos/user/new")
-  end
-
-  def user_author_assoc(conn, %{"id" => _id}) do
-    author = Memos.get_author!(3)
+  def user_author_assoc(conn, %{"id" => id}) do
+    author = Memos.get_author!(id)
     author = Repo.preload(author, [:memos])
-    IO.inspect author
     memos = author.memos
     render(conn, :index, memos: memos)
+  end
+
+  def user_author_assoc_api(conn, %{"id" => id}) do
+    author = Memos.get_author!(id)
+    author = Repo.preload(author, [:memos])
+    memos = author.memos
+    render(conn, :index, memos: memos)
+  end
+
+  def user_post_api(conn, %{"memo" => memo}) do
+    case [memo["username"], memo["password"]] do
+      ["deni", "wawaw_hunter"] ->
+        author = Memos.get_author_by_name("deniAndrian")
+        memo_atom = for {key, val} <- memo, into: %{}, do: {String.to_atom(key), val}
+        memo_rec = Memos.create_memo_author(memo_atom, author)
+        conn
+        |> render(:show, %{memo: %Memo{}})
+      ["marcsha", "wawaw_hunter"] ->
+        author = Memos.get_author_by_name("MarkSjaer")
+        memo_atom = for {key, val} <- memo, into: %{}, do: {String.to_atom(key), val}
+        memo_rec = Memos.create_memo_author(memo_atom, author)
+        conn
+        |> render(:show, %{memo: %Memo{}})
+      ["wildan", "wawaw_hunter"] ->
+        author = Memos.get_author_by_name("Aeshma")
+        memo_atom = for {key, val} <- memo, into: %{}, do: {String.to_atom(key), val}
+        memo_rec = Memos.create_memo_author(memo_atom, author)
+        conn
+        |> render(:show, %{memo: %Memo{}})
+      _ ->
+        conn
+        |> render(:show, %{memo: %Memo{}})
+    end
   end
 end

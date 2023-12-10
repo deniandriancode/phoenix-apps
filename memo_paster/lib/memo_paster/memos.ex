@@ -205,6 +205,12 @@ defmodule MemoPaster.Memos do
     memo_changeset = Ecto.Changeset.cast(%Memo{}, memo, [:title, :content])
     memos = [memo_changeset | author.memos]
     author_memo_changeset = author_changeset |> Ecto.Changeset.put_assoc(:memos, memos)
-    Repo.update!(author_memo_changeset)
+    rep = Repo.update!(author_memo_changeset)
+    Enum.at(rep.memos, 0)
+  end
+
+  @doc false
+  def get_author_by_name(name) do
+    Repo.get_by!(Author, name: name)
   end
 end

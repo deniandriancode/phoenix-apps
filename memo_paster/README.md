@@ -1,7 +1,6 @@
 # MemoPaster
 
-## TODO
-- [ ] polish the app (the feature has been implemented)
+## Project Finished! Yes Sir!!
 
 To start your Phoenix server:
 
