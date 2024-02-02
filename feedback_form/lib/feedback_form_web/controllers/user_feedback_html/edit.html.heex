@@ -1,0 +1,8 @@
+<.header>
+  Edit User feedback <%= @user_feedback.id %>
+  <:subtitle>Use this form to manage user_feedback records in your database.</:subtitle>
+</.header>
+
+<.user_feedback_form changeset={@changeset} action={~p"/user_feedbacks/#{@user_feedback}"} />
+
+<.back navigate={~p"/user_feedbacks"}>Back to user_feedbacks</.back>

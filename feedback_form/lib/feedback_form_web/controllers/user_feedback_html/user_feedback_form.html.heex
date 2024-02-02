@@ -1,0 +1,13 @@
+<.simple_form :let={f} for={@changeset} action={@action}>
+  <.error :if={@changeset.action}>
+    Oops, something went wrong! Please check the errors below.
+  </.error>
+  <.input field={f[:name]} type="text" label="Name" required />
+  <.input field={f[:email]} type="email" label="Email" required />
+  <.input field={f[:subject]} type="text" label="Subject" required />
+  <.input field={f[:rating]} type="number" label="Rating" step="0.01" min="0.0" max="10.0" value="0.0" required />
+  <.input field={f[:feedback]} type="textarea" label="Feedback" required />
+  <:actions>
+    <.button>Submit</.button>
+  </:actions>
+</.simple_form>

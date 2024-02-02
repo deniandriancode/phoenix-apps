@@ -1,0 +1,27 @@
+<.header>
+  Listing User feedbacks
+  <:actions>
+    <.link href={~p"/user_feedbacks/new"}>
+      <.button>New User feedback</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="user_feedbacks" rows={@user_feedbacks} row_click={&JS.navigate(~p"/user_feedbacks/#{&1}")}>
+  <:col :let={user_feedback} label="Name"><%= user_feedback.name %></:col>
+  <:col :let={user_feedback} label="Email"><%= user_feedback.email %></:col>
+  <:col :let={user_feedback} label="Subject"><%= user_feedback.subject %></:col>
+  <:col :let={user_feedback} label="Rating"><%= user_feedback.rating %></:col>
+  <:col :let={user_feedback} label="Feedback"><%= user_feedback.feedback %></:col>
+  <:action :let={user_feedback}>
+    <div class="sr-only">
+      <.link navigate={~p"/user_feedbacks/#{user_feedback}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/user_feedbacks/#{user_feedback}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={user_feedback}>
+    <.link href={~p"/user_feedbacks/#{user_feedback}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

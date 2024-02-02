@@ -1,0 +1,19 @@
+<.header>
+  User feedback <%= @user_feedback.id %>
+  <:subtitle>This is a user_feedback record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/user_feedbacks/#{@user_feedback}/edit"}>
+      <.button>Edit user_feedback</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @user_feedback.name %></:item>
+  <:item title="Email"><%= @user_feedback.email %></:item>
+  <:item title="Subject"><%= @user_feedback.subject %></:item>
+  <:item title="Rating"><%= @user_feedback.rating %></:item>
+  <:item title="Feedback"><%= @user_feedback.feedback %></:item>
+</.list>
+
+<.back navigate={~p"/user_feedbacks"}>Back to user_feedbacks</.back>

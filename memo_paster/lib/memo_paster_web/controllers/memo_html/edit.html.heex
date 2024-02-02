@@ -1,8 +1,0 @@
-<.header>
-  Edit Memo <%= @memo.id %>
-  <:subtitle>Use this form to manage memo records in your database.</:subtitle>
-</.header>
-
-<.memo_form changeset={@changeset} action={~p"/memos/#{@memo}"} />
-
-<.back navigate={~p"/memos"}>Back to memos</.back>
